@@ -1,17 +1,27 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Customer(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-
+    image = models.ImageField(null=True,blank=True)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url =''
+        return url
+    
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)
 
