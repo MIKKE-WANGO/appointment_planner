@@ -1,0 +1,82 @@
+{% extends "store/base.html" %}
+{%load static%}
+
+{%block head%}
+<link rel="stylesheet"  href="{% static 'css/cart.css' %}">
+{%endblock%}
+
+{%block content%}
+
+
+    <div class="cart">
+
+        {% if order.get_cart_items == 0 %}
+        <div class="empty">
+            <h4>Your cart is currently empty</h4>
+            <a  style="display: block; width:fit-content" class="check" href="{% url 'shop' %}">&#x2190; Continue Shopping</a>
+        </div>
+        {%else%}
+        
+        <div class=cartchild1>
+
+           
+            <div class='head'>
+                <div class= 'image'></div>
+                <div class='products'><strong>Item</strong></div>
+                <div class='products'><strong>Price</strong></div>
+                <div class='products'><strong>Quantity</strong></div>
+                <div class='products'><strong>Total</strong></div>
+
+            </div>
+
+         
+            <div class='items'>
+                {%for item in items%}
+                <div class= 'itemschild1'><img  src="{{item.product.imageURL}}" width="100" height="100"></div>
+                <div class='itemschild2'>{{item.product.name}}</div>
+                <div class='itemschild2'>{{item.product.price|floatformat:2}}</div>
+                <div class='itemschild2'>
+                    <svg id="plusminus" data-product={{item.product.id}} data-action="remove" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-dash update-cart" viewBox="0 0 16 16">
+                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                      </svg>
+                      {{item.quantity}}
+                      <svg id="plusminus" data-product={{item.product.id}} data-action="add" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus update-cart" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                      </svg>
+                    
+                </div>
+                
+                <div class='itemschild2'>{{item.get_total}}</div>
+                {%endfor%}
+		    </div>
+            
+        </div>
+        
+       
+
+
+        <div class=cartchild2>
+            <a  style="display: block;" class="check" href="{% url 'shop' %}">&#x2190; Continue Shopping</a>
+
+            <div style="margin: 40px auto;">
+                <p>
+                    Cart Items:     <strong>{{order.get_cart_items}}</strong>
+                </p>
+
+                <p>
+                    Cart Total:    <strong> {{order.get_cart_total}}</strong>
+                </p>
+            </div>
+
+            <a  style="display: block;"  href="{% url 'checkout' %}">Checkout <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+              </svg></a>
+
+        </div>
+        {%endif%}
+    </div>
+
+
+
+{%endblock%}
