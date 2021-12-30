@@ -1,0 +1,46 @@
+{% extends "store/base.html" %}
+{%load static%}
+
+{%block head%}
+<link rel="stylesheet"  href="{% static 'css/shop.css' %}">
+{%endblock%}
+
+{%block content%}
+
+<div  style="margin-top: 100px;">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+				{{myfilter.form}}
+
+
+
+				<button class="btn btn-primary" type='submit'>Search</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="shop">
+	
+	
+	{% for product in products %}
+	<div class="shopchild">
+
+        <img class="thumbnail" src="{{product.imageURL}}" alt="{{product.name}}">
+	
+		
+        <p><strong>{{product.name}}</strong></p>
+		
+		
+		<a style=display:block;  href="{% url 'product' id=product.id %}">View</a>
+		<p><strong>ksh{{product.price|floatformat:2}}</strong></p>		
+        <button data-product={{product.id}} data-action="add" class="update-cart addtocart">Add to Cart</button>
+		
+		
+
+	</div>
+
+	{% endfor %}
+</div>	
+
+{%endblock%}

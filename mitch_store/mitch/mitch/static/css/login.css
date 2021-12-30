@@ -1,0 +1,76 @@
+body{
+    background-color: #98D4BB;
+
+}
+
+.log{
+    
+    display: block;
+    width: 50%;
+    margin: auto;
+    margin-top: 130px;
+    margin-bottom: 40px;
+    min-height: fit-content;
+    height: auto;
+    
+    color: black;
+    border-radius: 10%;
+    padding: 20px;
+    background-color: pink;
+}
+form{
+    text-align: center;
+  
+}
+label{
+    display: block;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+h4{
+    
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.text-center{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-top: 5px;
+}
+a{
+    text-decoration-line: none;
+    color:purple;
+}
+.logbtn{
+    border: 2px solid rgb(197, 45, 184);
+    border-radius: 3%;
+    color:rgb(197, 45, 184);
+    text-align: center;
+    padding: 5px 25px;
+    text-decoration: none;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+    background-color: pink;
+    margin-bottom: 20px;
+}
+.logbtn:hover{
+    background-color: white;
+    color: black;
+    border-color: white;
+}
+svg{
+    transition-timing-function: ease-out;
+    transition-duration: 0.3s;
+    margin-bottom: 10px;
+}
+svg:hover{
+    transform: scale(1.2);
+
+}
+a:hover{
+    color: white;
+}
+@media only screen and (max-width: 700px) {
+    .log{
+        width: 80%;
+        border-radius: 8%;
+    }
+}

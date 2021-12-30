@@ -1,0 +1,191 @@
+{% extends "store/base.html" %}
+{%load static%}
+
+{%block head%}
+<link rel="stylesheet"  href="{% static 'css/checkout.css' %}">
+
+{%endblock%}
+
+{%block content%}
+
+<div class="checkout">
+
+    <div class="checkoutchild1">
+        {% if not request.user.is_authenticated %}
+        <form id="form">
+
+            {% csrf_token %}
+            <div id="user-info">
+                <p >
+                    Fill in the form to access payment methods
+                </p>
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="name" placeholder="Name..">
+                </div>
+                <div class="form-field">
+                    <input required class="form-control" type="email" name="email" placeholder="Email..">
+                </div>
+                <div class="form-field">
+                    <input required class="form-control" type="tel" name="tel" placeholder="mobile number">
+                </div>
+
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block continue" type="submit" value="Continue">
+            </div>
+            
+            <hr>
+    
+        </form>
+   
+    <br>
+        {%endif%}
+
+        <div id="payment-info">
+            
+            <a  class="btn btn-outline-dark mpesa" href=#> M-pesa </a>
+            <div id="paypal-button-container"></div>
+           
+        </div>
+
+
+
+    </div>
+
+    <div class= "checkoutchild2">
+        <h4 style="padding: 10px;">Order Summary</h4>
+        <hr>
+        <h5>Total items: {{order.get_cart_items}}</h5>
+        <h5> Total price: {{order.get_cart_total}}</h5>
+        <hr>
+        <div class='items'>
+            {%for item in items%}
+            <div class= 'itemschild1'><img  src="{{item.product.imageURL}}" width="100" height="100"></div>
+            <div class='itemschild2'>{{item.product.name}}</div>
+            <div class='itemschild2'>{{item.product.price|floatformat:2}}</div>
+            <div class='itemschild2'>
+                  {{item.quantity}}
+            </div>
+            
+            <div class='itemschild2'>{{item.get_total}}</div>
+            {%endfor%}
+        </div>
+                
+    </div>
+
+
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AdzxAQB0Fc6CZPjZPkOhBncVMDg4puUl8k0WFj0vzv9B3M2f81XhC9TAVSRY_N_JiKhTJ51a5kIGEDLv&currency=USD"></script>
+
+
+<script>
+
+    let total = '{{order.get_cart_total}}'
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: parseFloat(total).toFixed(2)
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+                // Successful capture! For demo purposes:
+                //console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                //var transaction = orderData.purchase_units[0].payments.captures[0];
+                //alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                // Replace the above to show a success message within this page, e.g.
+                //const element = document.getElementById('paypal-button-container');
+                //element.innerHTML = '';
+                //element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL: 
+                //window.location.href = "{%url 'shop' %}"
+                submitFormData()
+                  });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+
+<script type= "text/javascript">
+    
+    //show form if user is not anonymous otherwise dont show
+    if(user != 'AnonymousUser'){
+        document.getElementById('user-info').classList.add('hidden')
+       
+    }
+
+    if(user == 'AnonymousUser'){
+        let form = document.getElementById('form')
+        document.getElementById('payment-info').classList.add('hidden')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            console.log('form submitted..')
+            document.getElementById('payment-info').classList.remove('hidden')
+        
+            document.getElementById('form-button').classList.add('hidden')
+        })
+    }
+
+    /*
+    document.getElementById('make-payment').addEventListener('click', function(e){
+        submitFormData()
+    })
+    */
+
+    //submit form data to view function processOrder
+    function submitFormData(){
+        console.log('payment button clicked')
+
+        let userFormData = {
+            'name':null,
+            'email':null,
+            'tel':null,
+            'total':total, 
+        }
+
+        if(user == 'AnonymousUser'){
+            userFormData.name = form.name.value
+            userFormData.email = form.email.value
+            userFormData.tel = form.tel.value
+        }
+
+        const url = '/process_order/'
+        fetch(url,{
+        method:'POST',
+        headers:{ 'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body:JSON.stringify({'form': userFormData})
+        })
+
+        .then((response) => {
+            return response.json()
+        })
+
+        .then((data) =>{
+            console.log('success', data);
+            alert('Transaction completed');
+            window.location.href = "{%url 'shop' %}"
+
+            //reset cookie after payment is made
+            cart = {}
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+        })
+    }
+    
+
+</script>
+{%endblock%}

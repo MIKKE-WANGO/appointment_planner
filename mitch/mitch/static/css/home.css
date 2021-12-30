@@ -1,0 +1,110 @@
+
+
+.intro{
+    background-color: #98D4BB;
+    height: 100vh;
+    color: white;
+    padding-top: 150PX;
+    font-size: 17px;
+    min-height: 500px;
+    
+}
+.intro p, .bags p, .bagstraps p, .turbans p , .headbands p,.headwraps p, .dogharness p, .dogleash p{
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    padding: 20px 0px;
+    text-align: center;
+    color: white;
+}
+
+.intro h3{
+    bottom: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 100%;
+    text-align:center;
+}
+.visit{
+    text-align: center;
+    margin: 15px;
+}
+.visit a{
+    border: 2px solid rgb(197, 45, 184);
+    border-radius: 3%;
+    color:rgb(197, 45, 184);
+    text-align: center;
+    padding: 10px 25px;
+    text-decoration: none;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+}
+.visit a:hover{
+    background-color: white;
+    color: #98D4BB;
+    border-color: white;
+    
+}
+.bags{
+    background-color: #f3b5bb;
+    height: 100vh;
+    text-align: center;
+    padding-top: 50px;
+    min-height: 500px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    
+}
+
+.bagstraps{
+    background-color:  #E5DBD9;
+    height: 500px;
+    text-align: center;
+    padding-top: 50px;
+    height: 100vh;
+    min-height: 500px;
+}
+
+.turbans{
+    background-color: #8FA2A6;
+    height: 500px;
+    padding-top: 50px;
+     height: 100vh;
+    text-align: center;
+    min-height: 500px;
+}
+
+.headwraps{
+    background-color: #B2B2B2;
+    height: 500px;
+    padding-top: 50px;
+    height: 100vh;
+    text-align: center;
+    min-height: 500px;
+}
+
+.headbands{
+    background-color: #CCD4BF    ;
+    height: 500px;
+    height: 100vh;
+    text-align: center;
+    padding-top: 50px;
+    min-height: 500px;
+}
+
+.dogleash{
+    background-color: #D0BCAC;
+    height: 500px;
+    height: 100vh;
+    min-height: 500px;
+    padding-top: 50px;
+    text-align: center;
+}
+.dogharness{
+    background-color: #D29F8C;
+    height: 500px;
+    padding-top: 50px;
+    min-height: 500px;
+    height: 100vh;
+    text-align: center;
+}
